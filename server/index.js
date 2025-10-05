@@ -1,12 +1,27 @@
-require('dotenv').config({ path: '../.env' });  // Add this line at the very top
+// Load environment variables
+require('dotenv').config({ path: `${__dirname}/../.env` });
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
-require('dotenv').config({ path: `${__dirname}/../.env` });
+
+// Enable CORS
+app.use(cors({
+  origin: [
+    'https://fixitnow-platform.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:3000'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+
+// Handle preflight requests
+app.options('*', cors());
+
 // Middleware
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
