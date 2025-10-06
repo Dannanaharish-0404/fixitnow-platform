@@ -8,12 +8,13 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: (origin, callback) => {
+  origin: function (origin, callback) {
     const allowedOrigins = [
       'https://fixitnow-platform.vercel.app',
       'http://localhost:5173',
       'http://localhost:3000'
     ];
+    // Allow requests with no origin (mobile apps, etc.)
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
